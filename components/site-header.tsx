@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Github, Menu, Search, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 import { BrandMark } from "@/components/brand";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -17,28 +17,29 @@ const NAV_ITEMS = [
   { href: "/about", label: "About" },
 ];
 
+const emptySubscribe = () => () => {};
+
+function getShortcutLabel() {
+  if (typeof navigator === "undefined") return "Ctrl K";
+  return /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘ K" : "Ctrl K";
+}
+
 export function SiteHeader() {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [shortcutLabel, setShortcutLabel] = useState("Ctrl K");
+  const shortcutLabel = useSyncExternalStore(
+    emptySubscribe,
+    getShortcutLabel,
+    () => "Ctrl K",
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform)) {
-      setShortcutLabel("⌘ K");
-    }
   }, []);
 
   useEffect(() => {
@@ -162,6 +163,7 @@ export function SiteHeader() {
                         href={item.href}
                         className={cn("mobile-nav-link", active && "mobile-nav-link-active")}
                         aria-current={active ? "page" : undefined}
+                        onClick={() => setMenuOpen(false)}
                       >
                         <span className="mobile-nav-index">0{index + 1}</span>
                         {item.label}

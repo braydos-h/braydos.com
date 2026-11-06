@@ -2,11 +2,7 @@ import { ArrowUpRight, Github } from "lucide-react";
 import Link from "next/link";
 
 import { BrandMark } from "@/components/brand";
-import {
-  GITHUB_PROFILE_URL,
-  GITHUB_REPO_URL,
-  SITE_URL,
-} from "@/lib/constants";
+import { GITHUB_PROFILE_URL, GITHUB_REPO_URL } from "@/lib/constants";
 
 const YEAR = new Date().getUTCFullYear();
 
@@ -99,7 +95,7 @@ export function SiteFooter() {
             Built in public
           </p>
           <p className="footer-meta">
-            <Link href={SITE_URL.replace("https://", "https://")}>braydos.com</Link>
+            <span>braydos.com</span>
             <span aria-hidden="true">/</span>
             Next.js + GitHub API
           </p>

@@ -1,6 +1,7 @@
 import { ArrowUpRight, Github } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 
 import { ButtonLink } from "@/components/button-link";
 import { JsonLd } from "@/components/json-ld";
@@ -178,13 +179,13 @@ export default function AboutPage() {
                 </p>
                 <p>
                   That curiosity has turned into a body of public work.{" "}
-                  <a href="/projects/breachpilot">BreachPilot</a> is an
+                  <Link href="/projects/breachpilot">BreachPilot</Link> is an
                   evidence-driven autonomous security-testing operator.{" "}
-                  <a href="/projects/axion">Axion</a> observes network traffic
-                  without modifying it. The Xray installers turn brittle host
-                  setup into recoverable, auditable operations. Smaller projects
-                  — a proxy checker, a portable security skill, a cattle-weight
-                  estimator — explore the edges of that same loop.
+                  <Link href="/projects/axion">Axion</Link> observes network
+                  traffic without modifying it. The Xray installers turn brittle
+                  host setup into recoverable, auditable operations. Smaller
+                  projects — a proxy checker, a portable security skill, a
+                  cattle-weight estimator — explore the edges of that same loop.
                 </p>
                 <p>
                   I care about software that is understandable at the source
@@ -219,10 +220,10 @@ export default function AboutPage() {
                   <span className="interest-number">{interest.number}</span>
                   <h3>{interest.title}</h3>
                   <p>{interest.body}</p>
-                  <a href={interest.link.href} className="text-link">
+                  <Link href={interest.link.href} className="text-link">
                     {interest.link.label}
                     <ArrowUpRight size={13} aria-hidden="true" />
-                  </a>
+                  </Link>
                 </div>
               </Reveal>
             ))}
@@ -302,6 +303,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
 
       <section className="section about-contact">
         <div className="site-container">

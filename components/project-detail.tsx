@@ -18,7 +18,6 @@ import Link from "next/link";
 
 import { ButtonLink } from "@/components/button-link";
 import { CopyCommand } from "@/components/copy-command";
-import { Reveal } from "@/components/motion-reveal";
 import { ProjectVisual } from "@/components/project-visual";
 import { StatusPill, Tag } from "@/components/tag";
 import { formatDate, formatNumber, getLanguageColor } from "@/lib/format";

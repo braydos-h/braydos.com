@@ -16,7 +16,7 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import {
   useCallback,
   useEffect,
@@ -98,15 +98,14 @@ function iconForEntry(entry: PaletteEntry) {
 
 export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
   const router = useRouter();
-  const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const dialogRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const previousFocus = useRef<HTMLElement | null>(null);
 
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
+  const [returnFocus, setReturnFocus] = useState<HTMLElement | null>(null);
 
   const entries = useMemo<PaletteEntry[]>(
     () => [
@@ -135,6 +134,8 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
     );
   }, [entries, query]);
 
+  const currentIndex = Math.min(activeIndex, Math.max(filtered.length - 1, 0));
+
   const groups = useMemo(
     () =>
       (["Navigate", "Projects", "Elsewhere"] as const)
@@ -147,7 +148,9 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
   );
 
   const openPalette = useCallback(() => {
-    previousFocus.current = document.activeElement as HTMLElement;
+    setReturnFocus(
+      document.activeElement instanceof HTMLElement ? document.activeElement : null,
+    );
     setQuery("");
     setActiveIndex(0);
     setOpen(true);
@@ -155,8 +158,9 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
 
   const closePalette = useCallback(() => {
     setOpen(false);
-    window.setTimeout(() => previousFocus.current?.focus(), 0);
-  }, []);
+    const target = returnFocus;
+    window.setTimeout(() => target?.focus(), 0);
+  }, [returnFocus]);
 
   useEffect(() => {
     const onKeyDown = (event: globalThis.KeyboardEvent) => {
@@ -198,23 +202,12 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
 
   useEffect(() => {
     if (!open) return;
-    closePalette();
-    // Closing after a route change is intentional; do not reopen on render.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
-
-  useEffect(() => {
-    setActiveIndex((index) => Math.min(index, Math.max(filtered.length - 1, 0)));
-  }, [filtered.length]);
-
-  useEffect(() => {
-    if (!open) return;
-    const active = filtered[activeIndex];
+    const active = filtered[currentIndex];
     if (!active) return;
     document.getElementById(`command-item-${active.id}`)?.scrollIntoView({
       block: "nearest",
     });
-  }, [activeIndex, filtered, open]);
+  }, [currentIndex, filtered, open]);
 
   function activate(entry: PaletteEntry) {
     closePalette();
@@ -228,17 +221,18 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
   function handleInputKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      setActiveIndex((index) => (index + 1) % Math.max(filtered.length, 1));
+      setActiveIndex((currentIndex + 1) % Math.max(filtered.length, 1));
     }
     if (event.key === "ArrowUp") {
       event.preventDefault();
       setActiveIndex(
-        (index) => (index - 1 + Math.max(filtered.length, 1)) % Math.max(filtered.length, 1),
+        (currentIndex - 1 + Math.max(filtered.length, 1)) %
+          Math.max(filtered.length, 1),
       );
     }
     if (event.key === "Enter") {
       event.preventDefault();
-      const entry = filtered[activeIndex];
+      const entry = filtered[currentIndex];
       if (entry) activate(entry);
     }
   }
@@ -316,8 +310,8 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
                 aria-controls="command-results"
                 aria-autocomplete="list"
                 aria-activedescendant={
-                  filtered[activeIndex]
-                    ? `command-item-${filtered[activeIndex].id}`
+                  filtered[currentIndex]
+                    ? `command-item-${filtered[currentIndex].id}`
                     : undefined
                 }
                 placeholder="Search pages and projects…"
@@ -342,7 +336,7 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
                     {group.items.map((entry) => {
                       const index = filtered.findIndex((item) => item.id === entry.id);
                       const Icon = iconForEntry(entry);
-                      const active = index === activeIndex;
+                      const active = index === currentIndex;
 
                       return (
                         <Link
