@@ -1,0 +1,58 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow" cx="80%" cy="30%" r="65%">
+      <stop offset="0" stop-color="#6FA8FF" stop-opacity=".22"/>
+      <stop offset=".55" stop-color="#6FA8FF" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#07090C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#68E2D3" stop-opacity=".65"/>
+      <stop offset="1" stop-color="#6FA8FF" stop-opacity=".05"/>
+    </linearGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#8EA9D4" fill-opacity=".13"/>
+    </pattern>
+    <clipPath id="frame">
+      <rect width="1200" height="630" rx="0"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1200" height="630" fill="#07090C"/>
+  <g clip-path="url(#frame)">
+    <rect width="1200" height="630" fill="url(#glow)"/>
+    <rect x="70" y="54" width="1060" height="522" fill="url(#dots)" opacity=".5"/>
+    <path d="M70 54v522m1060-522v522M70 54h1060M70 576h1060" stroke="#F1F4F7" stroke-opacity=".08"/>
+
+    <g font-family="Segoe UI, Arial, sans-serif">
+      <text x="70" y="100" fill="#F1F4F7" font-size="27" font-weight="700" letter-spacing="-1.5">braydos<tspan fill="#6FA8FF">.</tspan></text>
+      <text x="1102" y="98" fill="#A0A9B8" font-size="13" font-family="Consolas, monospace" text-anchor="end" letter-spacing="1.5">PUBLIC WORK / @BRAYDOS-H</text>
+
+      <text x="70" y="238" fill="#F1F4F7" font-size="84" font-weight="650" letter-spacing="-5">Security.</text>
+      <text x="70" y="326" fill="#F1F4F7" font-size="84" font-weight="650" letter-spacing="-5">Networks.</text>
+      <text x="70" y="414" fill="#F1F4F7" font-size="84" font-weight="650" letter-spacing="-5">Systems.<tspan fill="#6FA8FF">_</tspan></text>
+
+      <text x="70" y="500" fill="#A0A9B8" font-size="21" letter-spacing="-.2">I build things for security, networking, and the internet.</text>
+      <text x="70" y="546" fill="#6D7685" font-size="14" font-family="Consolas, monospace" letter-spacing="1.2">BRAYDEN HABETS / SOFTWARE &amp; SECURITY ENGINEERING</text>
+    </g>
+
+    <g transform="translate(914 315)" fill="none">
+      <circle r="162" stroke="#F1F4F7" stroke-opacity=".1"/>
+      <circle r="112" stroke="#F1F4F7" stroke-opacity=".12"/>
+      <circle r="62" stroke="#F1F4F7" stroke-opacity=".17"/>
+      <path d="M-190 0H190M0-190V190" stroke="#F1F4F7" stroke-opacity=".08" stroke-dasharray="3 7"/>
+      <path d="M-138 -84C-80 -63 -34 -122 13 -83S88 -28 134 -53" stroke="url(#line)" stroke-width="1.6" stroke-dasharray="5 8"/>
+      <path d="M-158 100C-75 74 -20 126 35 66S115 27 167 45" stroke="#F1F4F7" stroke-opacity=".14"/>
+
+      <circle cx="-80" cy="-53" r="5" fill="#68E2D3"/>
+      <circle cx="99" cy="-90" r="4" fill="#6FA8FF"/>
+      <circle cx="132" cy="55" r="4" fill="#A192FF"/>
+      <circle cx="-88" cy="98" r="3" fill="#F1F4F7" fill-opacity=".6"/>
+
+      <rect x="-41" y="-41" width="82" height="82" rx="18" fill="#0C1016" stroke="#343D4C"/>
+      <text x="0" y="13" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="40" font-weight="650" fill="#F1F4F7" letter-spacing="-2">b<tspan fill="#6FA8FF">.</tspan></text>
+      <text x="0" y="72" text-anchor="middle" font-family="Consolas, monospace" font-size="9" fill="#8893A5" letter-spacing="1.2">FIELD / 01</text>
+    </g>
+
+    <text x="1130" y="528" fill="#F1F4F7" fill-opacity=".25" font-family="Consolas, monospace" font-size="11" text-anchor="end" letter-spacing="1.6">BRAYDOS.COM</text>
+  </g>
+</svg>
