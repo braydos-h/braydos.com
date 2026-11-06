@@ -34,7 +34,7 @@ export default async function RootLayout({
   const paletteProjects = getPaletteProjects(projects);
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className={`${GeistSans.variable} ${GeistMono.variable}`}>
         <ThemeProvider>
           <a href="#main-content" className="skip-link">
@@ -42,7 +42,9 @@ export default async function RootLayout({
           </a>
           <SiteHeader />
           <CommandPalette projects={paletteProjects} />
-          <main id="main-content">{children}</main>
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
           <SiteFooter />
         </ThemeProvider>
       </body>

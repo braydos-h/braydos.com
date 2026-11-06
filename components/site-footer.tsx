@@ -15,6 +15,7 @@ const NAVIGATION = [
 const FEATURED = [
   { label: "BreachPilot", href: "/projects/breachpilot" },
   { label: "Axion", href: "/projects/axion" },
+  { label: "Xray VLESS + WebSocket", href: "/projects/xray-vless-ws-cdn-installer" },
   { label: "VLESS + REALITY Vision", href: "/projects/vless-xtls-vision-installer" },
   { label: "AIF Project", href: "/projects/aif-project" },
 ];

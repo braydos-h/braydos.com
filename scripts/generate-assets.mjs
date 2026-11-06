@@ -13,7 +13,7 @@ const iconSvg = `
   <rect width="512" height="512" rx="116" fill="#07090C"/>
   <rect x="1.5" y="1.5" width="509" height="509" rx="114.5" fill="none" stroke="#252B36"/>
   <path d="M142 116h74v103c16-17 39-27 67-27 60 0 101 43 101 102 0 65-46 110-112 110-40 0-72-14-96-35v28h-74V116zm70 195c0 26 21 44 48 44 30 0 52-19 52-47 0-27-22-46-52-46-28 0-48 19-48 49z" fill="#F1F4F7"/>
-  <circle cx="382" cy="374" r="25" fill="#6FA8FF"/>
+  <circle cx="423" cy="407" r="24" fill="#6FA8FF"/>
 </svg>`;
 
 const markSvg = `
@@ -21,7 +21,7 @@ const markSvg = `
   <rect width="64" height="64" rx="15" fill="#07090C"/>
   <rect x=".5" y=".5" width="63" height="63" rx="14.5" fill="none" stroke="#2A303B"/>
   <path d="M18 14h9.2v13.1c2-2.1 4.9-3.4 8.4-3.4 7.5 0 12.7 5.4 12.7 12.8 0 8.1-5.8 13.8-14.1 13.8-5 0-9-1.8-12-4.4v3.5H18V14zm8.7 24.5c0 3.2 2.7 5.5 6 5.5 3.8 0 6.5-2.4 6.5-5.9 0-3.4-2.7-5.7-6.5-5.7-3.5 0-6 2.3-6 6.1z" fill="#F1F4F7"/>
-  <circle cx="48" cy="47" r="3.1" fill="#6FA8FF"/>
+  <circle cx="52" cy="50" r="3" fill="#6FA8FF"/>
 </svg>`;
 
 const ogSvg = `
@@ -59,7 +59,7 @@ const ogSvg = `
       <text x="70" y="414" fill="#F1F4F7" font-size="84" font-weight="650" letter-spacing="-5">Systems.<tspan fill="#6FA8FF">_</tspan></text>
 
       <text x="70" y="500" fill="#A0A9B8" font-size="21" letter-spacing="-.2">I build things for security, networking, and the internet.</text>
-      <text x="70" y="546" fill="#6D7685" font-size="14" font-family="Consolas, monospace" letter-spacing="1.2">BRAYDEN HABETS / SOFTWARE &amp; SECURITY ENGINEERING</text>
+      <text x="70" y="546" fill="#6D7685" font-size="14" font-family="Consolas, monospace" letter-spacing="1.2">BRAYDEN HABETS / SECURITY, NETWORKS &amp; SYSTEMS</text>
     </g>
 
     <g transform="translate(914 315)" fill="none">

@@ -13,12 +13,17 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useDeferredValue, useMemo, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 
 import { Spotlight } from "@/components/spotlight";
 import { StatusPill, Tag } from "@/components/tag";
 import { cn } from "@/lib/cn";
-import { formatDate, formatNumber, getLanguageColor } from "@/lib/format";
+import {
+  formatDate,
+  formatNumber,
+  getDemoActionLabel,
+  getLanguageColor,
+} from "@/lib/format";
 import type { ProjectCategory, ProjectIndexItem } from "@/lib/types";
 
 type SortOption = "featured" | "updated" | "stars" | "name";
@@ -65,12 +70,12 @@ function ProjectIndexCard({ project }: { project: ProjectIndexItem }) {
         </span>
       </div>
 
-      <h2 className="index-card-title">
+      <h3 className="index-card-title">
         <Link href={`/projects/${project.slug}`} className="project-title-link">
           {project.displayName}
           <ArrowUpRight size={18} strokeWidth={1.5} aria-hidden="true" />
         </Link>
-      </h2>
+      </h3>
 
       <p className="index-card-summary">{project.summary}</p>
 
@@ -128,9 +133,9 @@ function ProjectIndexCard({ project }: { project: ProjectIndexItem }) {
               target="_blank"
               rel="noreferrer noopener"
               className="project-action project-action-live"
-              aria-label={`Open live site for ${project.displayName}`}
+              aria-label={`${project.demo.label} for ${project.displayName} (opens in a new tab)`}
             >
-              Live
+              {getDemoActionLabel(project.demo.kind)}
               <ArrowUpRight size={12} aria-hidden="true" />
             </a>
           ) : null}
@@ -160,6 +165,31 @@ export function ProjectsExplorer({
   const [language, setLanguage] = useState("All");
   const [sort, setSort] = useState<SortOption>("featured");
   const [includeForks, setIncludeForks] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      const target = event.target as HTMLElement | null;
+      const isEditing =
+        target?.tagName === "INPUT" ||
+        target?.tagName === "TEXTAREA" ||
+        target?.tagName === "SELECT" ||
+        target?.isContentEditable;
+
+      if (event.key === "/" && !isEditing) {
+        event.preventDefault();
+        searchRef.current?.focus();
+      }
+
+      if (event.key === "Escape" && document.activeElement === searchRef.current) {
+        setQuery("");
+        searchRef.current?.blur();
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   const languages = useMemo(() => {
     return Array.from(
@@ -244,6 +274,9 @@ export function ProjectsExplorer({
   return (
     <section className="section projects-index" aria-labelledby="projects-index-title">
       <div className="site-container">
+        <h2 id="projects-index-title" className="sr-only">
+          Public repository index
+        </h2>
         <div className="index-toolbar">
           <div className="index-search-wrap">
             <Search size={17} strokeWidth={1.7} aria-hidden="true" />
@@ -251,6 +284,7 @@ export function ProjectsExplorer({
               Search projects
             </label>
             <input
+              ref={searchRef}
               id="project-search"
               type="search"
               value={query}

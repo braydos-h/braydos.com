@@ -148,8 +148,15 @@ export async function getRecentCommits(
       error instanceof Error ? error.message : error,
     );
 
+    const filteredFallback = activitySnapshot.commits
+      .filter((commit) => repoNames.includes(commit.repo))
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
     return {
-      data: activitySnapshot.commits.slice(0, limit),
+      data: (filteredFallback.length ? filteredFallback : activitySnapshot.commits).slice(
+        0,
+        limit,
+      ),
       source: "fallback",
       syncedAt: activitySnapshot.snapshotAt,
     };

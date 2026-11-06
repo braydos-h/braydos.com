@@ -43,6 +43,16 @@ export function SiteHeader() {
   }, []);
 
   useEffect(() => {
+    const desktopQuery = window.matchMedia("(min-width: 1024px)");
+    const onViewportChange = () => {
+      if (desktopQuery.matches) setMenuOpen(false);
+    };
+
+    desktopQuery.addEventListener("change", onViewportChange);
+    return () => desktopQuery.removeEventListener("change", onViewportChange);
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -61,7 +71,9 @@ export function SiteHeader() {
 
   function openCommandPalette() {
     setMenuOpen(false);
-    window.dispatchEvent(new CustomEvent("braydos:open-command-palette"));
+    window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent("braydos:open-command-palette"));
+    }, 0);
   }
 
   return (
@@ -109,11 +121,13 @@ export function SiteHeader() {
                 rel="noreferrer noopener"
                 className="github-pill"
                 aria-label="Brayden Habets on GitHub"
+                title="Open @braydos-h on GitHub"
               >
                 <span className="github-pill-icon">
                   <Github size={14} strokeWidth={1.9} />
                 </span>
-                <span className="github-pill-handle">@braydos-h</span>
+                <span className="github-pill-handle">GitHub</span>
+                <span className="github-pill-handle-mono">@braydos-h</span>
                 <ArrowUpRight size={13} strokeWidth={1.8} />
               </a>
 
@@ -136,16 +150,17 @@ export function SiteHeader() {
 
       <AnimatePresence initial={false}>
         {menuOpen ? (
-          <motion.div
+          <motion.nav
             id="mobile-navigation"
             className="mobile-nav"
+            aria-label="Mobile navigation"
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
             <div className="mobile-nav-inner">
-              <nav aria-label="Mobile navigation" className="mobile-nav-links">
+              <div className="mobile-nav-links">
                 {NAV_ITEMS.map((item, index) => {
                   const active =
                     item.href === "/"
@@ -172,7 +187,7 @@ export function SiteHeader() {
                     </motion.div>
                   );
                 })}
-              </nav>
+              </div>
 
               <div className="mobile-nav-secondary">
                 <button
@@ -200,7 +215,7 @@ export function SiteHeader() {
                 Security, networking, and the systems underneath.
               </p>
             </div>
-          </motion.div>
+          </motion.nav>
         ) : null}
       </AnimatePresence>
     </>

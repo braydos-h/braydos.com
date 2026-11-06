@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ProjectVisual } from "@/components/project-visual";
 import { Spotlight } from "@/components/spotlight";
 import { StatusPill, Tag } from "@/components/tag";
-import { formatDate, formatNumber } from "@/lib/format";
+import { formatDate, formatNumber, getDemoActionLabel } from "@/lib/format";
 import { getProjectPath } from "@/lib/projects";
 import { cn } from "@/lib/cn";
 import type { ResolvedProject } from "@/lib/types";
@@ -22,7 +22,7 @@ export function ProjectCard({ project, index, large = false }: ProjectCardProps)
   return (
     <Spotlight className={cn("project-card", large && "project-card-large")}>
       {large ? (
-        <div className="project-card-visual">
+        <div className="project-card-visual" aria-hidden={project.cover ? undefined : true}>
           {project.cover ? (
             <Image
               src={project.cover.src}
@@ -92,9 +92,9 @@ export function ProjectCard({ project, index, large = false }: ProjectCardProps)
                 target="_blank"
                 rel="noreferrer noopener"
                 className="project-action project-action-live"
-                aria-label={`Open the verified live site for ${project.displayName}`}
+                aria-label={`${project.demo.label} for ${project.displayName} (opens in a new tab)`}
               >
-                Live
+                {getDemoActionLabel(project.demo.kind)}
                 <ArrowUpRight size={12} strokeWidth={1.8} aria-hidden="true" />
               </a>
             ) : null}
@@ -113,7 +113,10 @@ export function ProjectCard({ project, index, large = false }: ProjectCardProps)
       </div>
 
       {!large ? (
-        <div className="project-card-visual project-card-visual-compact">
+        <div
+          className="project-card-visual project-card-visual-compact"
+          aria-hidden={project.cover ? undefined : true}
+        >
           {project.cover ? (
             <Image
               src={project.cover.src}

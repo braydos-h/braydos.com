@@ -19,7 +19,7 @@ export function RecentActivity({
             index="03"
             eyebrow="Recent activity"
             title="Fresh from the repo."
-            description="The latest public commits across the projects, pulled from GitHub at build time rather than kept as a hand-written feed."
+            description="The latest public commits across the projects, pulled from GitHub server-side rather than kept as a hand-written feed."
             action={
               <a
                 href="https://github.com/braydos-h"

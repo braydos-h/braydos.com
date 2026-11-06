@@ -12,11 +12,3 @@ export function BrandMark({ className }: { className?: string }) {
     </Link>
   );
 }
-
-export function BrandGlyph({ className }: { className?: string }) {
-  return (
-    <span className={cn("brand-glyph", className)} aria-hidden="true">
-      b<span>.</span>
-    </span>
-  );
-}

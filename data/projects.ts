@@ -423,7 +423,7 @@ export const PROJECT_OVERRIDES: Record<string, ProjectConfig> = {
         "The web photo estimate is presented as an AI estimate, never a replacement for a scale, veterinary advice, or an official livestock record. Results carry ranges and explicit dosing warnings.",
       ],
       why:
-        "The project explores the full path from a photo to a usable estimate: uncertain AI output, a deterministic offline cross-check, consent and account boundaries, background jobs, and deployment details. The web server moved to a Rust-only implementation and became a testbed for auth, rate limits, SSRF protection, and a clean production profile.",
+        "The project explores the full path from a photo to a usable estimate: uncertain AI output, a deterministic offline cross-check, consent and account boundaries, background jobs, and deployment details. Its web server is a Rust-only implementation with auth, rate limits, SSRF protection, and a separate production profile.",
       highlights: [
         {
           title: "Photo and tape together",

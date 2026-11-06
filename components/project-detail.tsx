@@ -95,6 +95,17 @@ export function ProjectDetail({
   const repositoryHref = project.repo.html_url;
   const readmeHref = `${repositoryHref}#readme`;
 
+  let sectionCursor = 1;
+  const nextSection = () => String(sectionCursor++).padStart(2, "0");
+  const overviewNumber = nextSection();
+  const whyNumber = details?.why ? nextSection() : null;
+  const highlightsNumber = details?.highlights?.length ? nextSection() : null;
+  const architectureNumber = details?.architecture ? nextSection() : null;
+  const screenshotsNumber = details?.screenshots?.length ? nextSection() : null;
+  const demosNumber = project.demos.length ? nextSection() : null;
+  const notesNumber = details?.notes?.length ? nextSection() : null;
+  const sourceNumber = nextSection();
+
   return (
     <article className="project-detail">
       <header className="detail-hero">
@@ -135,16 +146,18 @@ export function ProjectDetail({
                   </ButtonLink>
                 )}
 
-                <ButtonLink
-                  href={repositoryHref}
-                  external
-                  variant="secondary"
-                  className="button-secondary"
-                >
-                  <Github size={15} aria-hidden="true" />
-                  GitHub
-                  <ArrowUpRight size={13} aria-hidden="true" />
-                </ButtonLink>
+                {demo ? (
+                  <ButtonLink
+                    href={repositoryHref}
+                    external
+                    variant="secondary"
+                    className="button-secondary"
+                  >
+                    <Github size={15} aria-hidden="true" />
+                    GitHub
+                    <ArrowUpRight size={13} aria-hidden="true" />
+                  </ButtonLink>
+                ) : null}
               </div>
             </div>
 
@@ -185,7 +198,7 @@ export function ProjectDetail({
 
       <div className="detail-visual-wrap">
         <div className="site-container">
-          <div className="detail-visual">
+          <div className="detail-visual" aria-hidden={project.cover ? undefined : true}>
             {project.cover ? (
               <Image
                 src={project.cover.src}
@@ -212,7 +225,7 @@ export function ProjectDetail({
           <div className="detail-main">
             {details ? (
               <>
-                <Section number="01" title="Overview" id="overview">
+                <Section number={overviewNumber} title="Overview" id="overview">
                   <div className="prose-editorial">
                     {details.overview.map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
@@ -220,14 +233,14 @@ export function ProjectDetail({
                   </div>
                 </Section>
 
-                {details.why ? (
-                  <Section number="02" title="Why it exists">
+                {details.why && whyNumber ? (
+                  <Section number={whyNumber} title="Why it exists">
                     <blockquote className="detail-quote">{details.why}</blockquote>
                   </Section>
                 ) : null}
 
-                {details.highlights?.length ? (
-                  <Section number="03" title="What it does">
+                {details.highlights?.length && highlightsNumber ? (
+                  <Section number={highlightsNumber} title="What it does">
                     <div className="highlight-grid">
                       {details.highlights.map((highlight, index) => (
                         <div className="highlight-item" key={highlight.title}>
@@ -242,8 +255,8 @@ export function ProjectDetail({
                   </Section>
                 ) : null}
 
-                {details.architecture ? (
-                  <Section number="04" title="How it fits together">
+                {details.architecture && architectureNumber ? (
+                  <Section number={architectureNumber} title="How it fits together">
                     {details.architecture.intro ? (
                       <p className="detail-architecture-intro">
                         {details.architecture.intro}
@@ -265,8 +278,8 @@ export function ProjectDetail({
                   </Section>
                 ) : null}
 
-                {details.screenshots?.length ? (
-                  <Section number="05" title="In view">
+                {details.screenshots?.length && screenshotsNumber ? (
+                  <Section number={screenshotsNumber} title="In view">
                     <div className="detail-screenshots">
                       {details.screenshots.map((screenshot) => (
                         <figure key={screenshot.src}>
@@ -288,8 +301,8 @@ export function ProjectDetail({
                   </Section>
                 ) : null}
 
-                {project.demos.length ? (
-                  <Section number="05" title="Explore">
+                {project.demos.length && demosNumber ? (
+                  <Section number={demosNumber} title="Explore">
                     <div className="detail-demos">
                       {project.demos.map((item) => {
                         const Icon = demoIcons[item.kind];
@@ -322,8 +335,8 @@ export function ProjectDetail({
                   </Section>
                 ) : null}
 
-                {details.notes?.length ? (
-                  <Section number="06" title="Context & limits">
+                {details.notes?.length && notesNumber ? (
+                  <Section number={notesNumber} title="Context & limits">
                     <div className="detail-notes">
                       <div className="detail-notes-heading">
                         <TriangleAlert size={15} aria-hidden="true" />
@@ -343,7 +356,7 @@ export function ProjectDetail({
               </>
             ) : (
               <>
-                <Section number="01" title="Overview">
+                <Section number={overviewNumber} title="Overview">
                   <div className="prose-editorial">
                     <p>{project.summary}</p>
                     {readmeExcerpt ? (
@@ -368,7 +381,7 @@ export function ProjectDetail({
               </>
             )}
 
-            <Section number={details ? "07" : "02"} title="Read the source">
+            <Section number={sourceNumber} title="Read the source">
               <div className="source-callout">
                 <div>
                   <span className="source-callout-kicker">Public repository</span>

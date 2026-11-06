@@ -7,11 +7,3 @@ export const SITE_DESCRIPTION =
 export const SITE_TITLE = "Brayden Habets — Security, networking & software";
 export const REVALIDATE_SECONDS = 3600;
 export const GITHUB_REPO_URL = "https://github.com/braydos-h/braydos.com";
-
-export const SOCIAL_LINKS = [
-  {
-    label: "GitHub",
-    href: GITHUB_PROFILE_URL,
-    handle: "@braydos-h",
-  },
-] as const;

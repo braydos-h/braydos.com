@@ -306,6 +306,7 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
                 className="command-input"
                 type="text"
                 role="combobox"
+                aria-haspopup="listbox"
                 aria-expanded="true"
                 aria-controls="command-results"
                 aria-autocomplete="list"
@@ -331,8 +332,18 @@ export function CommandPalette({ projects }: { projects: PaletteProject[] }) {
             <div className="command-results" id="command-results" role="listbox">
               {groups.length ? (
                 groups.map((group) => (
-                  <div key={group.group} className="command-group">
-                    <p className="command-group-label">{group.group}</p>
+                  <div
+                    key={group.group}
+                    className="command-group"
+                    role="group"
+                    aria-labelledby={`command-group-${group.group.toLowerCase()}`}
+                  >
+                    <p
+                      className="command-group-label"
+                      id={`command-group-${group.group.toLowerCase()}`}
+                    >
+                      {group.group}
+                    </p>
                     {group.items.map((entry) => {
                       const index = filtered.findIndex((item) => item.id === entry.id);
                       const Icon = iconForEntry(entry);

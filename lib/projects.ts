@@ -111,6 +111,9 @@ export function getPaletteProjects(projects: ResolvedProject[]): PaletteProject[
   return [...projects]
     .sort((a, b) => {
       if (a.featured !== b.featured) return a.featured ? -1 : 1;
+      if (a.featuredOrder !== null && b.featuredOrder !== null) {
+        return a.featuredOrder - b.featuredOrder;
+      }
       return a.displayName.localeCompare(b.displayName, "en");
     })
     .map((project) => ({
