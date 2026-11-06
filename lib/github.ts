@@ -58,9 +58,18 @@ function isPublicRepo(repo: GitHubRepo): boolean {
 
 export async function getPublicRepos(): Promise<GitHubResult<GitHubRepo[]>> {
   try {
-    const repos = await githubFetch<GitHubRepo[]>(
-      `/users/${GITHUB_USERNAME}/repos?per_page=100&sort=pushed&type=owner`,
-    );
+    const repos: GitHubRepo[] = [];
+
+    // The public API caps each page at 100 entries. Page through so the index
+    // does not silently stop updating if the account grows past that limit.
+    for (let page = 1; page <= 10; page += 1) {
+      const batch = await githubFetch<GitHubRepo[]>(
+        `/users/${GITHUB_USERNAME}/repos?per_page=100&page=${page}&sort=pushed&type=owner`,
+      );
+      repos.push(...batch);
+
+      if (batch.length < 100) break;
+    }
 
     const publicRepos = repos.filter(isPublicRepo);
     if (!publicRepos.length) throw new Error("GitHub returned no public repositories");
@@ -157,9 +166,16 @@ function stripMarkdown(value: string): string {
     .trim();
 }
 
-export async function getReadmeExcerpt(repoName: string): Promise<string | null> {
+export async function getReadmeExcerpt(
+  repoName: string,
+  defaultBranch?: string,
+): Promise<string | null> {
   try {
-    for (const branch of ["main", "master"]) {
+    const branches = Array.from(
+      new Set([defaultBranch, "main", "master"].filter(Boolean) as string[]),
+    );
+
+    for (const branch of branches) {
       const response = await fetch(
         `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${repoName}/${branch}/README.md`,
         {

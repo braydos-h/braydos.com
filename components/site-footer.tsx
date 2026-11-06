@@ -87,9 +87,7 @@ export function SiteFooter() {
         </div>
 
         <div className="footer-bottom">
-          <p>
-            © {YEAR} Brayden Habets. <span>All rights reserved.</span>
-          </p>
+          <p>© {YEAR} Brayden Habets.</p>
           <p className="footer-status">
             <span className="footer-status-dot" aria-hidden="true" />
             Built in public

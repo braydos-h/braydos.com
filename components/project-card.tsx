@@ -92,7 +92,7 @@ export function ProjectCard({ project, index, large = false }: ProjectCardProps)
                 target="_blank"
                 rel="noreferrer noopener"
                 className="project-action project-action-live"
-                aria-label={`Open the ${project.demo.label} for ${project.displayName}`}
+                aria-label={`Open the verified live site for ${project.displayName}`}
               >
                 Live
                 <ArrowUpRight size={12} strokeWidth={1.8} aria-hidden="true" />

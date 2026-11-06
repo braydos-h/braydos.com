@@ -135,6 +135,7 @@ export function toProjectIndexItem(project: ResolvedProject): ProjectIndexItem {
     status: project.status,
     tech: project.tech,
     featured: project.featured,
+    featuredOrder: project.featuredOrder,
     demo: project.demo,
     cover: project.cover,
     stars: project.repo.stargazers_count,

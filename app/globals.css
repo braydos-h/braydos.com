@@ -1019,7 +1019,15 @@ html.light .button-primary {
 }
 
 .hero-name-dot {
-  color: rgb(var(--accent));
+  display: inline-block;
+  width: 0.15em;
+  height: 0.15em;
+  margin-left: 0.085em;
+  border-radius: 999px;
+  background: rgb(var(--accent));
+  box-shadow: 0 0 34px rgb(var(--accent) / 0.24);
+  vertical-align: baseline;
+  transform: translateY(0.005em);
 }
 
 .hero-lead {
@@ -1763,7 +1771,7 @@ html.light .signal-panel {
 
 .project-card-large .project-card-visual {
   min-height: 100%;
-  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
 }
 
 .project-card-visual-compact {
@@ -6043,8 +6051,8 @@ html.light .signal-panel {
   .project-card-large .project-card-visual {
     order: -1;
     min-height: 22rem;
+    border-right: 0;
     border-bottom: 1px solid var(--line);
-    border-left: 0;
   }
 
   .project-card-large .project-card-content {
@@ -6679,10 +6687,6 @@ html.light .signal-panel {
 }
 
 @media (max-width: 420px) {
-  .header-actions .theme-toggle {
-    display: none;
-  }
-
   .hero-eyebrow > span:last-child {
     display: none;
   }

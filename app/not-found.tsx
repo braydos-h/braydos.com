@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { ButtonLink } from "@/components/button-link";
 
 export default function NotFound() {
@@ -49,9 +47,6 @@ export default function NotFound() {
             <p className="not-found-hint">
               Or search from anywhere with <kbd>Ctrl</kbd> + <kbd>K</kbd>.
             </p>
-            <Link href="/" className="sr-only">
-              Return to the homepage
-            </Link>
           </div>
         </div>
       </div>

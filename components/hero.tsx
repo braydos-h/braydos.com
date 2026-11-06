@@ -35,7 +35,8 @@ export function Hero({ repositoryCount }: { repositoryCount: number }) {
             <h1 id="hero-title" className="hero-title">
               <span className="hero-hello">Hey, I&apos;m</span>
               <span className="hero-name">
-                Brayden<span className="hero-name-dot">.</span>
+                Brayden
+                <span className="hero-name-dot" aria-hidden="true" />
               </span>
             </h1>
 
@@ -86,7 +87,7 @@ export function Hero({ repositoryCount }: { repositoryCount: number }) {
         <dl className="hero-meta">
           <div>
             <dt>Public repositories</dt>
-            <dd>{repositoryCount.toString().padStart(2, "0")} and counting</dd>
+            <dd>{repositoryCount.toString().padStart(2, "0")} indexed</dd>
           </div>
           <div>
             <dt>Core stack</dt>

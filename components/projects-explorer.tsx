@@ -212,6 +212,9 @@ export function ProjectsExplorer({
         return a.displayName.localeCompare(b.displayName, "en");
       }
       if (a.featured !== b.featured) return a.featured ? -1 : 1;
+      if (a.featuredOrder !== null && b.featuredOrder !== null) {
+        return a.featuredOrder - b.featuredOrder;
+      }
       return new Date(b.pushedAt).getTime() - new Date(a.pushedAt).getTime();
     });
   }, [

@@ -160,6 +160,7 @@ export interface ProjectIndexItem {
   status: ProjectStatus | null;
   tech: string[];
   featured: boolean;
+  featuredOrder: number | null;
   demo: ProjectLink | null;
   cover?: {
     src: string;

@@ -6,6 +6,7 @@ import { ProjectDetail } from "@/components/project-detail";
 import { SITE_URL } from "@/lib/constants";
 import { getReadmeExcerpt } from "@/lib/github";
 import {
+  getFeaturedProjects,
   getProjectBySlug,
   getProjects,
 } from "@/lib/projects";
@@ -53,31 +54,30 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const readmeExcerpt = project.details
     ? null
-    : await getReadmeExcerpt(project.repo.name);
-  const currentIndex = projects.findIndex((item) => item.slug === project.slug);
+    : await getReadmeExcerpt(project.repo.name, project.repo.default_branch);
+
+  // Keep the featured sequence together, then continue through the rest of
+  // the public index. No looping pager: the first and last projects get a
+  // single clear neighbour instead of a confusing wrap-around.
+  const featured = getFeaturedProjects(projects);
+  const remaining = projects
+    .filter((item) => !item.featured)
+    .sort((a, b) => a.displayName.localeCompare(b.displayName, "en"));
+  const orderedProjects = [...featured, ...remaining];
+  const currentIndex = orderedProjects.findIndex((item) => item.slug === project.slug);
   const previous =
     currentIndex > 0
       ? {
-          displayName: projects[currentIndex - 1].displayName,
-          slug: projects[currentIndex - 1].slug,
+          displayName: orderedProjects[currentIndex - 1].displayName,
+          slug: orderedProjects[currentIndex - 1].slug,
         }
-      : projects.length > 1
-        ? {
-            displayName: projects[projects.length - 1].displayName,
-            slug: projects[projects.length - 1].slug,
-          }
-        : undefined;
+      : undefined;
   const next =
-    projects.length > 1
-      ? currentIndex < projects.length - 1
-        ? {
-            displayName: projects[currentIndex + 1].displayName,
-            slug: projects[currentIndex + 1].slug,
-          }
-        : {
-            displayName: projects[0].displayName,
-            slug: projects[0].slug,
-          }
+    currentIndex >= 0 && currentIndex < orderedProjects.length - 1
+      ? {
+          displayName: orderedProjects[currentIndex + 1].displayName,
+          slug: orderedProjects[currentIndex + 1].slug,
+        }
       : undefined;
 
   const structuredData = {
